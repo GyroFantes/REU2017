@@ -1,0 +1,44 @@
+\documentclass{article}
+\usepackage{format}
+\title{Summing angular momentum}
+\author{Forest Yang}
+\date{June 2, 2017}
+
+
+\begin{document}
+\maketitle
+Consider the possibility of a product of angular momentum states, with each state being independent from the other, in the sense that if one defines angular momentum operators
+\begin{align*}
+\begin{aligned}
+&\hat{J}_{1i} && \text{acting on the first state} \\
+&\hat{J}_{2i} && \text{acting on the second state,} \\
+&\text{then} && [\hat{J}_{1i}, \hat{J}_{2j}] = 0
+\end{aligned}
+\end{align*}
+Furthermore, these angular momentum operators are assumed by definition to follow the standard relations \begin{equation*}  [\hat{J}_{ni}, \hat{J}_{nj}] = i\hbar\epsilon_{ijk}\hat{J}_{nk}\end{equation*}
+So the myriad of results proven from this relation still follow. Identifying a state $\ket{j_1 m_1} \times \ket{j_2 m_2}$ as $\ket{j_1 m_1 j_2 m_2}$
+\begin{align*}
+\begin{aligned}
+& \hat{J}_{1z}\ket{j_1 m_1 j_2 m_2} = \hbar m_1 \ket{j_1 m_1 j_2 m_2} && \hat{J}_{2z}\ket{j_1 m_1 j_2 m_2} = \hbar m_2 \ket{j_1 m_1 j_2 m_2} \\
+& \hat{\vec{J}}^2_{1}\ket{j_1 m_1 j_2 m_2} = \hbar^2 j_1(j_1+1) \ket{j_1 m_1 j_2 m_2} && \hat{\vec{J}}_{2}^2\ket{j_1m_1j_2m_2} = \hbar^2j_2(j_2+1)\ket{j_1 m_1 j_2 m_2}
+\end{aligned}
+\end{align*}
+Now, these states are eigenstates of $\{\hat{J}_{1z}, \hat{\vec{J}}_1^2, \hat{J}_{2z}, \hat{\vec{J}}_2^2\}$. These operators clearly commute with each other. Somewhat by definition, these states form a complete set (it consists of all combinations of each of the states in the product). It turns out that eigenstates of $\{\hat{\vec{J}}^2, \hat{J}_z^2, \hat{J}_1, \hat{J}_2\}$ where $\hat{\vec{J}} = \hat{\vec{J}}_1 + \hat{\vec{J}}_2$  span the same complete set (Wikipedia "The Compatibility Theorem." This is still confusing but it helps). First step is to verify that $\hat{\vec{J}}$ is indeed an angular momentum operator.
+ \begin{equation*} [\hat{J}_i, \hat{J}_j] = [\hat{J}_{1i} + \hat{J}_{2i}, \hat{J}_{1j} + \hat{J}_{2j}] = [\hat{J}_{1i}, \hat{J}_{1j}] + [\hat{J}_{2i}, \hat{J}_{2j}] = i\hbar\epsilon_{ijk}\hat{J}_{1k} + i\hbar\epsilon_{ijk}\hat{J}_{2k} = i\hbar\epsilon\hat{J}_{k}\end{equation*}
+The concomitant relations follow. In particular, $[\hat{\vec{J}}^2, \hat{J}_z] = 0$. Furthermore, $[\hat{\vec{J}}^2, \hat{\vec{J}}_n^2] = 0$ because $\hat{\vec{J}}_n^2$ essentially commutes with everything. Therefore $\{\hat{\vec{J}}^2, \hat{J}_z^2, \hat{J}_1, \hat{J}_2\}$ is a complete set of commuting observables, with eigenstates denoted by $\ket{jmj_1j_2}$. These are generally not eigenstates of the $\hat{J}_{1z}$ and $\hat{J}_{2z}$, since $\hat{\vec{J}}^2$ can be rewritten as 
+\begin{equation*} \hat{\vec{J}}^2 = \hat{\vec{J}}_1^2 + \hat{\vec{J}}_2^2 + 2\hat{J}_1 \cdot \hat{J}_2 = \hat{\vec{J}}_1^2 + \hat{\vec{J}}_2^2 + \hat{J}_{1+}\hat{J}_{2-} + \hat{J}_{1-}\hat{J}_{2+} + \hat{J}_{1z}\hat{J}_{2z} \end{equation*}
+Due to the raising and lowering operators, $\ket{j_1 m_1 j_2 m_2}$ wouldn't be an eigenstate unless $m_1$ and $m_2$ were both maximum or both minimum. It is in our interest to consider the possible values of $j$, the total angular momentum number. In the separate angular momentum basis, there is one state with $m = j_1 + j_2$, it would be the $\ket{j_1j_1j_2j_2}$ state. In the total angular momentum basis, this corresponds to the $\ket{j_1 + j_2, j_1 + j_2, j_1j_2}$ state. The $j$ number must be $j_1 + j_2$ since it must be at least as high as the $m$ number. There also must be a $j=j_1 + j_2 - 1$ number, because there are two $m=j_1 + j_2 - 1$ states in the separate basis and the total basis only has a $j=j_1 + j_2$ that can support an $m=j_1 + j_2  - 1$ so far. (There is actually an implied non-degeneracy assumption here, but it can be proven. If the state $\ket{j,m-1,j_1,j_2}$ is k-fold degenerate it implies the state $\ket{j, m, j_1, j_2}$ is k-fold degenerate because $\hat{J}_+$ maps the latter to the former) Continuing on in this fashion, the number of $m$ states stops increasing when you get to $m= |j_1 - j_2|$, because in a sense we've reached the bottom value of the minimum of $j_1,j_2$. So, the minimum value of $j$ is actually $|j_1 - j_2|$. \\
+This observation also gives a way to express a $\ket{jmj_1j_2}$ state in terms of $\ket{j_1m_1j_2m_2}$ states. This is done for two spin-$\frac{1}{2}$ particles as follows. 
+\begin{align*}
+\ket{11} &= \ket{\uparrow\uparrow} \\
+\hat{J}_-\ket{11} &= (\hat{J}_{1-} + \hat{J}_{2-})\ket{\uparrow\uparrow} \\
+\sqrt{(1+1)(1-1+1)}\ket{10} &= \sqrt{(\frac{1}{2}+\frac{1}{2})(\frac{1}{2}-\frac{1}{2}+1)}(\ket{\uparrow\downarrow} + \ket{\downarrow\uparrow}) \\
+\ket{10} &= \frac{1}{\sqrt{2}}(\ket{\uparrow\downarrow} + \ket{\downarrow\uparrow}) \\
+\ket{1\text{-}1} &= \ket{\downarrow\downarrow} \\
+\ket{00} &= \frac{1}{\sqrt{2}}(\ket{\uparrow\downarrow} - \ket{\downarrow\uparrow})
+\end{align*}
+This can be expressed in matrix form as 
+\[\begin{pmatrix}\ket{11} \\ \ket{10} \\ \ket{1,-1} \\ \ket{00} \end{pmatrix} = \begin{pmatrix} 1 & 0 & 0 & 0 \\ 0 & \frac{1}{\sqrt{2}} & \frac{1}{\sqrt{2}} & 0 \\
+0 & \frac{1}{\sqrt{2}} & -\frac{1}{\sqrt{2}} & 0 \\ 0 & 0 & 0 & 1 \end{pmatrix} \begin{pmatrix} \ket{\uparrow\uparrow} \\ \ket{\uparrow\downarrow} \\ \ket{\downarrow\uparrow} \\  \ket{\downarrow\downarrow}  \end{pmatrix} \]
+So to get the $\ket{j_1m_1j_2m_2}$ states in terms of the $\ket{jmj_1j_2}$ states one simply needs to invert the above matrix.
+\end{document}

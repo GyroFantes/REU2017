@@ -1,0 +1,143 @@
+\documentclass{article}
+\usepackage{format}
+\title{Hamiltonian commutators, Angular Momentum}
+\author{Forest Yang}
+\date{May 31, 2017}
+
+\begin{document}
+\maketitle
+\section{Hamiltonian commutators}
+The Hubbard Hamiltonian is given by $\hat{H} = -\sum_{ij\sigma} t_{ij} c_{i\sigma}^\dagger c_{j\sigma} - \mu \sum_{i\sigma} \hat{n}_{i\sigma} + U \sum_{i} \hat{n}_{i\uparrow} \hat{n}_{i\downarrow}$. We wish to show that 
+\begin{equation*} [\hat{S}_{\pm}, \hat{H}] = [\hat{S}_z, \hat{H}] = [\hat{J}_z, \hat{H}] = 0, \qquad [\hat{H}, \hat{J}_{\pm}] =  \pm (U-2\mu) \hat{J}_{\pm} \end{equation*}
+Recall, 
+\begin{align*}
+\begin{aligned}
+& \hat{S}_+ = \sum_{i} c_{i\uparrow}^\dagger c_{i\downarrow} && \hat{S}_- = \sum_{i} c_{i\downarrow}^\dagger c_{i\uparrow} && \hat{S}_z = \frac{1}{2}\sum_{i}\hat{n}_{i\uparrow} - \hat{n}_{i\downarrow} \\
+&\hat{J}_+ = \sum_{i} c_{i\uparrow}^\dagger c_{i\downarrow}^\dagger (-1)^{i+1} && \hat{J}_z = \sum_{i} c_{i\downarrow} c_{i\uparrow} (-1)^{i+1} && \hat{J}_z = \frac{1}{2} \sum_{i} (\hat{n}_{i\downarrow} + \hat{n}_{i\uparrow} - 1)
+\end{aligned}
+\end{align*}
+First I show $[\hat{S}_+, \hat{H}] = 0$. 
+\begin{equation*}
+[\hat{H},\hat{S}_+] = -\sum_{ijk\sigma} t_{ij}[c_{i\sigma}^\dagger c_{j\sigma}, c_{k\uparrow}^\dagger c_{k\downarrow}] - \mu \sum_{ij\sigma} [c_{i\sigma}^\dagger c_{i\sigma}, c_{j\uparrow}^\dagger c_{j\downarrow}] + U\sum_{ij} [\hat{n}_{i\uparrow} \hat{n}_{i\downarrow}, c_{j\uparrow}^\dagger c_{j\downarrow}]
+\end{equation*}
+To help evaluate the first (hopping) term:
+\begin{align*}
+[c_{i\sigma}^\dagger c_{j\sigma}, c_{k\uparrow}^\dagger c_{k\downarrow}] &= c_{k\uparrow}^\dagger [c_{i\sigma}^\dagger c_{j\sigma}, c_{k\downarrow}] + [c_{i\sigma}^\dagger c_{j\sigma}, c_{k\uparrow}^\dagger]c_{k\downarrow} \\
+&= c_{k\uparrow}^\dagger (c_{i\sigma}^\dagger \{ c_{j\sigma}, c_{k\downarrow} \} - \{ c_{i\sigma}^\dagger, c_{k\downarrow}\} c_{j\sigma}) + (c_{i\sigma}^\dagger \{ c_{j\sigma}, c_{k\uparrow}^\dagger \} - \{ c_{i\sigma}^\dagger, c_{k\uparrow}^\dagger \} c_{j\sigma})c_{k\downarrow} \\
+&= -c_{k\uparrow}^\dagger c_{j\sigma}\delta_{ik}\delta_{\sigma\downarrow} + c_{i\sigma}^\dagger c_{k\downarrow}\delta_{jk}\delta_{\sigma\uparrow}
+\end{align*}
+The first (hopping) term can now be evaluated:
+\begin{equation*}
+-\sum_{ijk\sigma} t_{ij} [c_{i\sigma}^\dagger c_{j\sigma}, c_{k\uparrow}^\dagger c_{k\downarrow}] = \sum_{ij} t_{ij} c_{i\uparrow}^\dagger c_{j\downarrow} - \sum_{ij} t_{ij} c_{i\uparrow}^\dagger c_{j\downarrow} = 0
+\end{equation*}
+Onto showing that the second term is 0:
+\begin{equation*}
+[\hat{n}_{i\sigma}, c_{j\uparrow}^\dagger c-{j\downarrow}] = c_{j\uparrow}^\dagger [\hat{n}_{i\sigma}, c_{j\downarrow}] + [\hat{n}_{i\sigma}, c_{j\uparrow}^\dagger]c_{j\downarrow} = \delta_{ij}(c_{j\uparrow}^\dagger c_{j\downarrow} - c_{j\uparrow}^\dagger c-{j\downarrow}) = 0
+\end{equation*}
+Which readily implies that the second term is 0. Lastly,
+\begin{align*}
+[\hat{n}_{i\uparrow} \hat{n}_{i\downarrow}, c_{j\uparrow}^\dagger c_{j\downarrow}] &= c_{j\uparrow}^\dagger [\hat{n}_{i\uparrow} \hat{n}_{i\downarrow}, c_{j\downarrow}] + [\hat{n}_{i\uparrow} \hat{n}_{i\downarrow}, c_{j\uparrow}^\dagger]c_{j\downarrow} \\
+&= c_{j\uparrow}^\dagger ( \hat{n}_{i\uparrow}[\hat{n}_{i\downarrow}, c_{j\downarrow}] + [\hat{n}_{i\uparrow}, c_{j\downarrow}] \hat{n}_{i\downarrow}) + (\hat{n}_{i\uparrow}[\hat{n}_{i\downarrow}, c_{j\uparrow}^\dagger] + [\hat{n}_{i\uparrow}, c_{j\uparrow}^\dagger] \hat{n}_{i\downarrow})c_{j\downarrow} \\
+&= -c_{j\uparrow}^\dagger \hat{n}_{i\uparrow} c_{j\downarrow} \delta_{ij} + c_{j\uparrow}^\dagger \hat{n}_{i\downarrow} c_{j\downarrow} \delta_{ij} = 0
+\end{align*}
+The last line follows because if $i=j$ then the left term contains a $(c_{i\uparrow}^\dagger)^2$ and the right term contains a $(c_{i\downarrow})^2$ both of which are 0. This shows that the last term in the commutator is 0. Therefore, $[\hat{S}_+, \hat{H}] = 0$, and via a similar calculation, one can verify that $[\hat{S}_-, \hat{H}] = 0$. \\
+Proceeding with the next identity: 
+\begin{equation*}
+2[\hat{S}_z, \hat{H}] = -\sum_{ijk\sigma} t_{jk}([\hat{n}_{i\uparrow}, c_{j\sigma}^\dagger c_{k\sigma}] - [\hat{n}_{i\downarrow}, c_{j\sigma}^\dagger c_{k\sigma}]) - \mu\sigma_{ij\sigma} [\hat{n}_{i\uparrow}, \hat{n}_{j\sigma}] - [\hat{n}_{i\downarrow}, \hat{n}_{i\sigma}] +U\sum_{ij} [\hat{n}_{i\uparrow}, \hat{n}_{j\uparrow} \hat{n}_{i\downarrow}] - [\hat{n}_{i\downarrow}, \hat{n}_{j\uparrow} \hat{n}_{i\downarrow}]
+\end{equation*}
+It is time to show a useful result for evaluating a commutator with the first term of the Hamiltonian, namely, that the sum of number operators of a given spin $\sigma'$ over all positions commutes with the first term. 
+\begin{align*}
+\sum_{ijk\sigma} t_{jk}[\hat{n}_{i\sigma'}, c_{j\sigma}^\dagger c_{k\sigma}] &= \sum_{ijk\sigma} t_{jk}(c_{j\sigma}^\dagger [\hat{n}_{i\sigma'}, c_{k\sigma}] + [\hat{n}_{i\sigma'}, c_{j\sigma}^\dagger] c_{k\sigma}) \\
+&= \sum_{ijk\sigma} t_{jk} ( -\delta_{ik} \delta_{\sigma \sigma'} c_{j\sigma}^\dagger c_{k\sigma} + \delta_{ij} \delta_{\sigma \sigma'} c_{j\sigma}^\dagger c_{k\sigma}) \\
+&= -\sum_{ij} t_{ij} c_{i\sigma'}^\dagger c_{j\sigma'} + \sum_{ij} t_{ij} c_{i\sigma'}^\dagger c_{j\sigma'} = 0
+\end{align*}
+This now implies that the first term of $[\hat{S}_z, \hat{H}]$ is 0. To show that the other terms are 0, note that number operators commute: 
+\begin{equation*}
+[\hat{n}_{i\sigma}, c_{j\sigma'}^\dagger c_{j\sigma'}] = c_{j\sigma'}^\dagger [\hat{n}_{i\sigma}, c_{j\sigma'}] + [\hat{n}_{i\sigma}, c_{j\sigma'}^\dagger] c_{j\sigma'} = \delta_{\sigma\sigma'} \delta_{ij} (-c_{j\sigma'}^\dagger c_{j\sigma'} + c_{j\sigma'}^\dagger c_{j\sigma'}) = 0
+\end{equation*}
+Therefore, $[\hat{S}_z, \hat{H}] = 0$. Since $\hat{J}_z$ is also the sum of sums of number operators of a given spin over all positions, in fact $[\hat{J}_z, \hat{H}] = 0$ as well. Onto the final identity:
+\begin{equation*}
+[\hat{H}, \hat{J}_+] = -\sum_{ijk\sigma} (-1)^{k+1} t_{ij} [c_{i\sigma}^\dagger c_{j\sigma}, c_{k\uparrow}^\dagger c_{k\downarrow}^\dagger] - \mu\sum_{ij \sigma} (-1)^{j+1} [\hat{n}_{i\sigma}, c_{j\uparrow}^\dagger c_{j\downarrow}^\dagger] + U\sum_{ij}(-1)^{j+1} [\hat{n}_{i\uparrow} \hat{n}_{i\downarrow}, c_{j\uparrow}^\dagger c_{j\downarrow}^\dagger]
+\end{equation*}
+Starting as always with the first term:
+\begin{align*}
+[c_{i\sigma}^\dagger c_{j\sigma}, c_{k\uparrow}^\dagger c_{k\downarrow}^\dagger] &= c_{k\uparrow}^\dagger [ c_{i\sigma}^\dagger c_{j\sigma}, c_{k\downarrow}^\dagger] + [c_{i\sigma}^\dagger c_{j\sigma}, c_{k\uparrow}^\dagger] c_{k\downarrow}^\dagger \\
+&= c_{k\uparrow}^\dagger (c_{i\sigma}^\dagger \{ c_{j\sigma}, c_{k\downarrow}^\dagger \} - \{c_{i\sigma}^\dagger, c_{k\downarrow}^\dagger \} c_{j\sigma}) + (c_{i\sigma}^\dagger \{c_{j\sigma}, c_{k\uparrow}^\dagger\} - \{ c_{i\sigma}^\dagger, c_{k\uparrow}^\dagger \} c_{j\sigma}) c_{k\downarrow}^\dagger \\
+&= c_{k\uparrow}^\dagger c_{i\sigma}^\dagger \delta_{jk} \delta_{\sigma\downarrow} + c_{i\sigma}^\dagger c_{k\downarrow}^\dagger \delta_{jk} \delta_{\sigma\uparrow} 
+\end{align*}
+So that 
+\begin{equation*}
+\sum_{ijk\sigma} (-1)^{j+1} t_{ij} [c_{i\sigma}^\dagger c_{j\sigma}, c_{k\uparrow}^\dagger c_{k\downarrow}^\dagger] = \sum_{ij} t_{ji} c_{i\uparrow}^\dagger c_{j\downarrow}^\dagger (-1)^{i+1} + \sum_{ij}t_{ij}c_{i\uparrow}^\dagger c_{j\downarrow}^\dagger (-1)^{j+1} = \sum_{ij} t_{ij} c_{i\uparrow}^\dagger c_{j\downarrow}^\dagger ((-1)^{i+1} + (-1)^{j+1}) = 0
+\end{equation*}
+The following facts were used in the above line; that $t_{ij} = t_{ji}$, since $t_{ij}$ is an adjacency matrix, and that adjacent states' numbering differs by an odd number (checkerboard pattern).\\
+Noticing that $\sum_{i\sigma} \hat{n}_{i\sigma}$ differs from $2\hat{J}_z$ by a constant, the middle term can quickly be evaluated: 
+\begin{equation*}
+[-\mu\sum_{i\sigma} \hat{n}_{i\sigma} , \hat{J}_{\pm}] = -2\mu[\hat{J}_z, \hat{J}_{\pm}] = \mp \mu 2\hat{J}_{\pm}
+\end{equation*} 
+For the final term:
+\begin{align*}
+[\hat{n}_{i\uparrow} \hat{n}_{j\downarrow}, c_{j\uparrow}^\dagger c_{j\downarrow}^\dagger ] &= c_{j\uparrow}^\dagger [\hat{n}_{i\uparrow} \hat{n}_{i\downarrow}, c_{j\downarrow}^\dagger ] + [\hat{n}_{i\uparrow} \hat{n}_{i\downarrow}, c_{j\uparrow}^\dagger] c_{j\downarrow}^\dagger \\
+&= c_{j\uparrow}^\dagger(\hat{n}_{i\uparrow}[\hat{n}_{i\downarrow}, c_{j\uparrow}^\dagger] + [\hat{n}_{i\uparrow}, c_{j\downarrow}^\dagger]\hat{n}_{i\downarrow}) + (\hat{n}_{i\uparrow}[\hat{n}_{i\downarrow}, c_{j\uparrow}^\dagger] + [\hat{n}_{i\uparrow}, c_{j\uparrow}^\dagger]\hat{n}_{i\downarrow})c_{j\downarrow}^\dagger \\
+&= c_{j\uparrow}^\dagger \hat{n}_{i\uparrow} c_{j\downarrow}^\dagger \delta_{ij} + c_{j\uparrow}^\dagger \hat{n}_{i\downarrow} c_{i\downarrow}^\dagger \delta_{ij} 
+\end{align*}
+The first term above goes away because if $i=j$ then the first term contains a $(c^\dagger)^2$. Now, finishing up our calculations:
+\begin{align*}
+U\sum_{ij}(-1)^{j+1} [\hat{n}_{i\uparrow} \hat{n}_{i\downarrow}, c_{j\uparrow}^\dagger c_{j\downarrow}^\dagger] &= U\sum_{i} (-1)^{i+1} c_{i\uparrow}^\dagger c_{i\downarrow}^\dagger c_{i\downarrow} c_{i\downarrow}^\dagger \\
+&= U\sum_{i} (-1)^{i+1} ( c_{i\uparrow}^\dagger c_{i\downarrow}^\dagger c_{i\downarrow} c_{i\downarrow}^\dagger + c_{i\uparrow}^\dagger c_{i\downarrow}^\dagger(1- \{c_{i\downarrow}, c_{i\downarrow}^\dagger\})) \\
+&= U\sum_{i}(-1)^{i+1} c_{i\uparrow}^\dagger c_{i\downarrow}^\dagger = U\hat{J}_+
+\end{align*}
+as desired. The corresponding result for $J_-$ can be verified doing the same calcultaion. Therefore, adding in the contribution from the middle term, $[\hat{H}, \hat{J}_{\pm}] = \pm(U-2\mu)\hat{J}_{\pm}$.
+\section{Angular momentum}
+The angular momentum operator has the familiar form $\hat{\vec{L}}  = \hat{\vec{r}} \times \hat{\vec{p}}$. In other words, $L_i = \epsilon_{ijk}\hat{x}_j\hat{p}_k$. \\
+It turns out that $[\hat{L}_i, \hat{L}_j] = \epsilon_{ijk}i\hbar \hat{L}_k$:
+\begin{align*}
+[\hat{L}_i, \hat{L}_{i'}] &= [\epsilon_{ijk}x_jp_k, \epsilon_{i'j'k'}x_{j'}p_{k'}] \\
+&= \epsilon_{ijk}\epsilon_{i'j'k'} [x_jp_k, x_{j'}p_{k'}] \\
+&= \epsilon_{ijk}\epsilon_{i'j'k'}(x_{j'}[x_{j}p_k, p_{k'}] + [x_jp_k, x_{j'}]p_{k'}) \\
+&= \epsilon_{ijk}\epsilon_{i'j'k'}(x_{j'}p_{k}i\hbar \delta_{jk'} - x_jp_{k'}i\hbar \delta_{j'k}) \\
+&= i\hbar(\epsilon_{ijk}\epsilon_{i'j'j} x_{j'}p_k - \epsilon_{ijk}\epsilon_{i'kk'} x_jp_{k'}) \\
+&= i\hbar\big[(\delta_{ij'}\delta_{ki'} - \delta{ii'}\delta_{kj'})x_{j'}p_k - (\delta_{ik'}\delta_{ji'} - \delta_{ii'}\delta_{jk'})x_jp_{k'} \big] \\
+&= i\hbar(x_ip_{i'} - x_{i'}p_i) = \epsilon_{ii'k} i\hbar \hat{L}_k
+\end{align*}
+The commutator $[x_i, p_j] = i\hbar \delta_{ij}$ was used. One can see that $\epsilon_{ijk}\epsilon_{i'j'j}$ can be simplified by noting that for it to be nonzero $i' \neq j'$ which implies $i'=i, j'=k$ or $i'=k, j'=i$. Analyzing these cases separately to see if the parity of $i'j'j$ equals or is opposite to that of $ijk$ gives $\delta_{ij'}\delta_{ki'} - \delta_{ii'}\delta_{kj'}$, and the same is done for the other $\epsilon$ product. \\
+Now we introduce the $\hat{\vec{L}}^2 = \hat{L}_x^2 + \hat{L}_y^2 + \hat{L}_z^2$ total angular momentum operator. For now it is desirable to show that $\hat{\vec{L}}^2$ commutes with $\hat{L}_z$, to justify searching for simultaneous eigenstates of these operators. Making use of Einstein notation:
+\begin{equation*}
+[\hat{\vec{L}}^2, \hat{L}_i] = [\hat{L}_j^2, \hat{L}_i] = \hat{L}_j[\hat{L}_j, \hat{L}_i] + [\hat{L}_j, \hat{L}_i]\hat{L}_j = i\hbar\epsilon_{jik}(\hat{L}_j\hat{L}_k + \hat{L}_k\hat{L}_j) =0
+\end{equation*}
+The sum is equal to 0 because interchanging $j$ and $k$ switches the sign of $\epsilon_{jik}$ while preserving $\hat{L}_j\hat{L}_k + \hat{L}_k\hat{L}_j$. Having shown that $\hat{\vec{L}}^2$ commutes with $\hat{L}_z$, take $\ket{lm}$ to be a simultaneous eigenstate of $\hat{\vec{L}}^2$ and $\hat{L}_z$, with $l$ and $m$ identifying its eigenvalues:
+\begin{equation*}
+\hat{\vec{L}}^2 \ket{lm} = l(l+1)\hbar^2\ket{lm} \qquad \hat{L}_z \ket{lm} = m\hbar\ket{lm} 
+\end{equation*}
+Now define raising and lowering operators, \begin{equation*} \hat{L}_+ = \hat{L}_x + i\hat{L}_y \qquad \hat{L}_- = \hat{L}_x - i\hat{L}_y \end{equation*}
+with the following commutator identities (which can be obtained easily from the previous identities)
+\begin{equation*}
+[\hat{\vec{L}}^2, \hat{L}_{\pm}]  = 0 \qquad [\hat{L}_z, \hat{L}_{\pm}] = \pm \hbar \hat{L}_{\pm} \qquad [\hat{L}_+, \hat{L}_-] = 2\hbar\hat{L}_z
+\end{equation*}
+Some useful identities are:
+\begin{equation*}
+\hat{L}_{\pm}\hat{L}_{\mp} = \hat{\vec{L}}^2 - \hat{L}_z^2 \pm \hbar\hat{L}_z \qquad \hat{\vec{L}}^2 = \frac{1}{2}(\hat{L}_+\hat{L}_- + \hat{L}_-\hat{L}_+) + \hat{L}_z^2
+\end{equation*}
+As it turns out, these raising and lowering operators when acted upon a state return a state with $\hat{L}_z$ raised or lowered by 1. Because,
+\begin{equation*}
+\hat{L}_z \hat{L}_{\pm} \ket{lm} = (\pm\hbar \hat{L}_{\pm} + \hat{L}_{\pm}\hat{L}_z)\ket{lm} = (m\pm  1)\hbar\hat{L}_{\pm}\ket{lm} = (m\pm  1)\hbar c_{lm\pm}\ket{l,m\pm 1}
+\end{equation*}
+The attached constant $c_{lm\pm}$ is unknown. It can be calculated, however, like so (let's take it to be real and positive):
+\begin{gather*}
+c_{lm\pm}^2 = |\hat{L}_\pm \ket{lm}|^2 = \braket{lm |\hat{L}_\mp \hat{L}_\pm | lm} = \braket{lm | \hat{\vec{L}}^2 - \hat{L}_z^2 \mp \hbar\hat{L}_z | lm} = \hbar^2(l(l+1) - m^2 \mp m) \\
+ \implies c_{lm\pm} = \hbar\sqrt{l(l+1) - m(m\pm 1)} = \hbar\sqrt{(l\mp m)(l \pm m + 1)}
+\end{gather*}
+This also indirectly says that the maximum and minimum values of $m$ are $l$ and $-l$ respectively, that is, $\hat{L}_{\pm} \ket{l \pm l} = 0$, and that $2l$ is an integer, so then $l$ is a half integer. \\
+Furthermore, by using the formula for $c_{lm+} = \sqrt{(l-m)(l+m+1)}$, an eigenstate can be expressed in terms of $\hat{L}_+$ and $\ket{l-l}$:
+\begin{equation*} \ket{lm} = \sqrt{\frac{(2l)!(l+m)!}{(l-m)!}}(\frac{\hat{L}_+}{\hbar})^{l+m}\ket{l-l}\end{equation*}
+Now start looking at $\ket{lm}$ in the $\theta,\phi$ basis, that is $\braket{\theta,\phi|lm} = Y_{m}^l(\theta,\phi)$. By virtue of the fact that $\hat{L}_z = -i\hbar \frac{\partial}{\partial \phi}$
+\begin{equation*} \braket{\theta, \phi| \hat{L}_z |lm} = -i\hbar \frac{\partial}{\partial \phi} Y_{m}^l (\theta, \phi) = \hbar m Y_{m}^l (\theta, \phi) \implies Y_{m}^l(\theta, \phi) = f_m^l(\theta) e^{im\phi} \end{equation*}
+To do more with these functions write $\hat{L}_{\pm}$ in derivatives. Recalling that 
+\begin{align*} \begin{aligned} & \hat{L}_x = i\hbar(\sin\phi \frac{\partial}{\partial \theta} + \cot\theta\cos\phi\frac{\partial}{\partial \phi}) && \hat{L}_y = -i\hbar(\cos\phi\frac{\partial}{\partial \theta} - \cot\theta\sin\phi\frac{\partial}{\partial \phi}) \\
+&\hat{L}_{\pm} = \pm e^{i\phi}\hbar(\frac{\partial}{\partial \theta} \pm i\cot\theta\frac{\partial}{\partial \phi}) && \hat{\vec{L}}^2 = -\hbar^2(\frac{1}{\sin\theta} \frac{\partial}{\partial \theta} \sin\theta \frac{\partial}{\partial \theta} + \frac{1}{\sin^2\theta}\frac{\partial^2}{\partial \phi^2})
+\end{aligned}\end{align*}
+$\hat{L}_-\ket{l-l} = 0$ implies 
+\begin{equation*}
+-i\hbar(\frac{\partial}{\partial \theta} - i\cot\theta \frac{\partial}{\partial \phi}) f_{-l}^l(\theta)e^{-il\phi} = -i\hbar(\frac{\partial}{\partial \theta} - l\cot\theta)f_{-l}^l(\theta)e^{-il\phi} = 0 \implies f_{-l}^l = C\sin^l\theta  
+\end{equation*}
+The rest involves some integration.
+\end{document} 

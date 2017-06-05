@@ -1,0 +1,157 @@
+\documentclass{article}
+\usepackage{format}
+\title{Introduction to the Green's Function}
+\author{Forest Yang}
+\date{June 1, 2017}
+
+
+\begin{document}
+\maketitle
+\section{Defining the Green's Function}
+The "imaginary time, time-ordered" Green's function is defined as 
+\begin{equation*} G(\tau, \tau') = -\frac{1}{z}\tr[T_{\tau}e^{-\beta \hat{H}} C(\tau) C^\dagger(\tau')] \end{equation*}
+The unfamiliar terms inside $G(\tau, \tau')$ are defined as follows:
+\begin{align*}
+\begin{aligned}
+&C(\tau) = e^{\tau\hat{H}}ce^{-\tau\hat{H}} && C^\dagger(\tau') = e^{\tau'\hat{H}}c^\dagger e^{-\tau\hat{H}} \\
+&z = \tr e^{-\beta\hat{H}} &&  T_\tau A_\tau B_{\tau'} = \hv(\tau - \tau')A_\tau B_{\tau'} - \hv(\tau' - \tau)B_{\tau'}A_\tau && \beta=\frac{1}{k_BT}  \\
+\end{aligned}
+\end{align*}
+$\theta$ is the heaviside step function, i.e. $\theta(x) = \mathbf{1}_{x >0}$. For now, suppose the hamiltonian is simply $\hat{H} = -\mu c^\dagger c$. Only one particle is being considered, so the only two states are $\ket{0}$ and $\ket{1}$ with energy eigenvalues of $E_0 = 0$ and $E_1 = -\mu$. For this $\hat{H}$
+\begin{equation*} z = \tr e^{-\beta\hat{H}} = \sum_{n} \braket{n|e^{-\beta\hat{H}}|n} = 1 + e^{\beta\mu} \end{equation*}
+Interestingly, Green's function can be simplified signifcantly for this $\hat{H}$ as well. First simplify the expressions for $C(\tau)$ and $C^\dagger(\tau')$: 
+\begin{align*}
+\frac{d}{d\tau}C(\tau) &= e^{\tau\hat{H}} \hat{H} c e^{-\tau\hat{H}} - e^{\tau\hat{H}} c \hat{H} e^{-\tau\hat{H}} \\
+&= e^{\tau\hat{H}}[\hat{H}, c] e^{-\tau\hat{H}} \\
+&= -\mu e^{\tau\hat{H}}[\hat{n}, c] e^{-\tau\hat{H}} \\
+&= \mu e^{\tau\hat{H}}c e^{-\tau\hat{H}} \\
+&= \mu C(\tau) \\
+\frac{d}{d\tau'}C^\dagger(\tau') &= -\mu e^{\tau'\hat{H}}[\hat{n}, c^\dagger] e^{-\tau'\hat{H}} \quad \text{skipping previous steps} \\
+&= -\mu e^{\tau'\hat{H}}c^\dagger c^{-\tau'\hat{H}}\\
+&= -\mu C^\dagger(\tau') 
+\end{align*}
+\begin{equation*} \implies C(\tau) = e^{\mu \tau} c \qquad C^\dagger(\tau') = e^{-\mu\tau'} c^\dagger \end{equation*}
+Plugging these into Green's function:
+\begin{align*}
+G(\tau, \tau') &= -\theta(\tau - \tau') \tr e^{-\beta\hat{H}} e^{\mu \tau} c e^{-\mu\tau'} c^\dagger \frac{1}{z} + \theta(\tau'-\tau)\tr e^{-\beta\hat{H}} e^{-\mu\tau'}c^\dagger e^{\mu\tau}c\frac{1}{z} \\
+&= -\theta(\tau-\tau')e^{\mu(\tau-\tau')}\frac{1}{z} \tr e^{-\beta\hat{H}} cc^\dagger + \theta(\tau-\tau')e^{\mu(\tau-\tau')}\frac{1}{z} \tr e^{-\beta\hat{H}} c^\dagger c  \\
+&= e^{\mu(\tau-\tau')} \big[ -\theta(\tau-\tau') \frac{1}{1 + e^{\beta \mu}} + \theta(\tau'-\tau) \frac{e^{\beta\mu}}{1 + e^{\beta\mu}} \big] \\
+&= e^{\mu(\tau-\tau')}(-\theta(\tau-\tau')f(\mu) + \theta(\tau'-\tau)f(-\mu)) \qquad \text{with } f(\mu) = \frac{1}{1 + e^{\beta\mu}} \\
+&= e^{\mu(\tau-\tau')}(\theta(\tau'-\tau) - f(\mu)) \qquad \text{since } f(\mu) + f(-\mu) = 1 \text{ and } \theta(x) + \theta(-x) = 1
+\end{align*}
+\section{Two general properties of the Green's function}
+\subsection{Time-translational invariance}
+Time-translational invariance is the fact that Green's function is really just dependent on one parameter, the difference $\tau-\tau'$. 
+\begin{align*}
+G(\tau,\tau') &= -\frac{1}{z} \tr T_\tau e^{-\beta\hat{H}} e^{\tau\hat{H}} c e^{-\tau\hat{H}} e^{\tau'\hat{H}} c^\dagger e^{-\tau'\hat{H}} \\
+&= -\frac{1}{z} \tr T_\tau e^{-\beta\hat{H}} e^{(\tau -\tau')\hat{H}} c e^{-(\tau-\tau')\hat{H}} c^\dagger \qquad [\hat{H}, \hat{H}] = 0, \text{ and } \tr T_\tau AB = \tr T_\tau BA \\
+&= -\frac{1}{z} \tr T_{\tau-\tau'} e^{-\beta\hat{H}} C(\tau-\tau') C^\dagger(0) \\
+&= G(\tau-\tau', 0) \\
+:&= G(\tau-\tau')
+\end{align*}
+In the second line, the time ordering operator $T_\tau$ doesn't appear to really mean anything since the $\tau$'s and $\tau'$'s are out of order. But, it actually makes sense, after observing that under a trace $T_\tau$ really means 
+\begin{equation*} \tr T_\tau \text{expr} = (\theta(\tau-\tau') - \theta(\tau'-\tau)) \tr \text{expr} = \tr T_{\tau-\tau'} \text{expr} \end{equation*}
+\subsection{Antiperiodicity of $\beta$}
+Green's function is antiperiodic in $\beta$, that is, $G(\tau) = -G(\tau+\beta)$. To avoid exponential growth, ideally $\beta \geq \tau + \beta$, so for convenience $\tau$ can be assumed to be negative. For the same reason $\tau \geq -\beta$, so $\tau + \beta \geq \tau' = 0$ and $T_{\tau + \beta - \tau'} = 1$.
+\begin{align*}
+G(\tau + \beta) &= -\frac{1}{z} \tr e^{-\beta\hat{H}} C(\tau + \beta)C^\dagger(0) \\
+&= -\frac{1}{z} \tr e^{-\beta\hat{H}} e^{(\tau+\beta)\hat{H}} c e^{-(\tau + \beta)\hat{H}} c^\dagger \\
+&= -\frac{1}{z} \tr e^{-\beta\hat{H}} e^{-\tau\hat{H}} c^\dagger e^{\tau\hat{H}} c \\
+&= -\frac{1}{z} \tr e^{-\beta\hat{H}} c^\dagger e^{\tau\hat{H}} c e^{-\tau\hat{H}} \\
+&= - G(\tau)
+\end{align*}
+Keep in mind the assumption that $\tau \leq \tau'$ was used in the last line, for the proper case of $T_\tau$. \\
+The antiperiodicity of $G$ comes in handy because it allows for the Fourier Transform of $G$. One can verify that the function $e^{\mu\tau}(\hv(\tau) - f(\mu))$ is antiperiodic in $\beta$.
+\section{Introduction to fourier series/transforms}
+Fourier transforms is based on fourier series, which is based on the orthogonality of the basis $\{\sin(\frac{n\pi x}{L}), \cos(\frac{m\pi}{L})\}_{m,n=0}^\infty$. It is true that 
+\begin{align*}
+&\int_{-L}^L \sin\big(\frac{m\pi x}{L}\big)\sin\big(\frac{n\pi x}{L}\big) dx = \begin{cases} L & \text{if } m=n \\
+0 & \text{if } m\neq n
+\end{cases} \qquad
+\int_{-L}^L \cos\frac{m\pi x}{L}\cos\frac{n\pi x}{L} dx = \begin{cases} 2L & \text{if } m=n=0 \\
+L & \text{if } m=n\neq 0\\
+0 & \text{if } m\neq n
+\end{cases} \\
+&\int_{-L}^L \cos\frac{m\pi x}{L}\sin\frac{n\pi x}{L} dx = 0
+\end{align*}
+Therefore any continuous periodic function $f(x)$ can be expressed as 
+\begin{equation*}
+f(x) = A_0 + \sum_{m=1}^\infty A_m\cos\big(\frac{m\pi x}{L}\big) +  \sum_{n=1}^\infty B_n\sin\big(\frac{n\pi x}{L}\big)
+\end{equation*}
+Where the coefficients are given by 
+\begin{equation*}
+A_0 = \frac{1}{2L}\int_{-L}^L f(x) \qquad A_{m\neq 0} = \frac{1}{L}\int_{-L}^L f(x) \cos\big(\frac{m\pi x}{L}\big) dx \qquad B_n = \frac{1}{L}\int_{-L}^L f(x) \sin\big(\frac{n\pi x}{L}\big) dx 
+\end{equation*}
+Alternatively, $f(x)$ can be expressed as 
+\begin{equation*}
+f(x) = \sum_{n=-\infty}^\infty C_n e^{\frac{i\pi n x}{L}} \quad \text{where} \quad C_n = \frac{1}{2}(A_{|n|} - i\sgn(n) B_{|n|}) = \frac{1}{2L}\int_{-L}^L f(x) e^{-i\frac{n\pi x}{L}} dx
+\end{equation*}
+In the limit as $L \rightarrow \infty$, this provides an explanation for the fourier transform.
+\begin{align*}
+f(x) = \lim_{L\rightarrow\infty} \sum_{n=-\infty}^\infty C_n e^{i\frac{n\pi x}{L}} &= \frac{1}{2\pi}\sum_{n=-\infty}^\infty \frac{\pi}{L} e^{i\frac{n\pi x}{L}} \int_{-L}^L f(x) e^{-i\frac{n\pi x}{L}} dx \\
+&=  \frac{1}{2\pi}\int_{-\infty}^\infty e^{ikx} \bigg(\int_{-\infty}^\infty f(x)e^{-ikx} dx \bigg)dk \\
+&= \frac{1}{\sqrt{2\pi}}\int_{-\infty}^\infty e^{ikx} F(k) dk
+\end{align*}
+Where $F(k) = \frac{1}{\sqrt{2\pi}}\int_{-\infty}^\infty f(x)e^{-ikx} dx$ is the fourier transform of $f(x)$.
+\subsection{Matsubara Frequencies}
+Let us find the fourier series for $G(\tau)$ calculated for the simple $\hat{H} = -\mu c^\dagger c$ earlier (antiperiodic in $\beta$ means periodic in $2\beta$, although our allowed range is only $2\beta$). That is, assume $G(\tau)$ takes the form
+\begin{equation*}
+G(\tau) = \sum_{n=-\infty}^\infty e^{-i\frac{\pi n \tau}{\beta}} G_n
+\end{equation*}
+Where $G_n$ is to be determined as follows (let $\omega_n = \frac{\pi n}{\beta}$)
+\begin{align*}
+G_n &= \frac{1}{2\beta}\int_{-\beta}^\beta e^{i\omega_n \tau} G(\tau) d\tau = \frac{1}{2\beta} \int_{-\beta}^\beta e^{i\omega_n\tau} e^{\mu\tau}(\hv(\tau) - f(\mu)) d\tau \\
+&= \frac{1}{2\beta}\bigg[\int_{0}^\beta e^{(i\omega_n + \mu)\tau}f(-\mu)d\tau - \int_{-\beta}^0 e^{(i\omega_n + \mu)\tau}f(\mu)d\tau \bigg] \\
+&= \frac{1}{2\beta(i\omega_n + \mu)}\bigg[e^{(i\omega_n + \mu)\tau}f(-\mu) \bigg|_0^\beta - e^{(i\omega_n+\mu)\tau}f(\mu)\bigg|_{-\beta}^0 \bigg] \\
+&= \frac{1}{2\beta(i\omega_n + \mu)}\bigg[e^{(i\omega_n + \mu)\tau}\bigg|_0^\beta - e^{(i\omega_n + \mu)\tau}f(\mu)\bigg|_{-\beta}^\beta       \bigg] \\
+&= \frac{1}{2\beta(i\omega_n + \mu)}\bigg[(-1)^n e^{\beta\mu} - 1 - ((-1)^ne^{\beta\mu} - (-1)^ne^{-\beta\mu})f(\mu)  \bigg]\\
+&= \frac{1}{2\beta(i\omega_n +\mu)}\bigg[(-1)^n(e^{\beta\mu}+ \frac{e^{-\beta\mu} - e^{\beta\mu}}{1+e^{\beta\mu}} ) - 1 \bigg]
+\end{align*}
+I seem to be unable to simplify this expression.
+\section{Spin, more angular momentum relations}
+The discovery of an instrinsic angular momentum possessed by particles motivates the introduction of spin angular momentum operators $\hat{\vec{S}} = (\hat{S}_x, \hat{S}_y, \hat{S}_z)$. Like regular angular momentum:
+\begin{equation*}
+[\hat{S}_i, \hat{S}_j] = i\hbar\epsilon_{ijk}\hat{S}_k \qquad \hat{S}_z \ket{sm_s} = \hbar m_s \ket{sm_s} \qquad \hat{\vec{S}}^2 \ket{sm_s} = s(s+1)\ket{sm_s}
+\end{equation*}
+An important, simple case to consider is spin--$\frac{1}{2}$. Let the basis $\ket{\uparrow}$ and $\ket{\downarrow}$ such that $\hat{S}_z \ket{\uparrow} = \frac{1}{2}\hbar\ket{\uparrow}$ and $\hat{S}_z \ket{\downarrow} = -\frac{1}{2}\hbar\ket{\downarrow}$. Since there are only two states, $\hat{S}_x^2$ and $\hat{S}_y^2$ turn out to be quite nice. 
+\begin{equation*}
+\hat{S}_x^2 = \frac{1}{4}(\hat{S}_+ + \hat{S}_-)^2 = \frac{1}{4}(\hat{S}_+^2 + \hat{S}_+\hat{S}_- + \hat{S}_-\hat{S}_+ + \hat{S}_-^2) = \frac{1}{2}(\hat{\vec{S}}^2 - \hat{S}_z^2) = \hat{S}_z^2
+\end{equation*}
+If there are only two states, raising or lowering twice must annihilate any state so $\hat{S}_+^2 = \hat{S}_-^2 = 0$. Also, I used $\frac{1}{2}(\hat{S}_+\hat{S}_- + \hat{S}_-\hat{S}_+) = \hat{\vec{S}}^2 - \hat{S}_z^2$. It goes without saying that similarly $\hat{S}_y^2 = \hat{S}_z^2$. This can be used to derive new relations. For the following, assume that $i$ comes before $j$ in an even permutation, WLOG
+\begin{align*}
+\hat{S}_i\hat{S}_j + \hat{S}_j\hat{S}_i &= [\hat{S}_j, \hat{S}_k]\hat{S}_j + \hat{S}_j[\hat{S}_j, \hat{S}_k] \\
+&= \hat{S}_j\hat{S}_k\hat{S}_j - \hat{S}_k\hat{S}_j\hat{S}_j + \hat{S}_j\hat{S}_j\hat{S}_k -\hat{S}_j\hat{S}_k\hat{S}_j \\
+&= \hat{S}_j^2\hat{S}_k - \hat{S}_j^2\hat{S}_k \qquad \text{as } \hat{S}_j^2 \text{ is a multiple of the identity} \\
+&= 0
+\end{align*}
+And in the case of $i=j$ then $2\hat{S}_i^2 = \frac{\hbar^2}{2} \mathbf{1}$ where $\mathbf{1}$ is the identity. Thus,
+\begin{equation*}
+\{\hat{S}_i, \hat{S}_j\}_+ = \delta_{ij} \frac{\hbar^2}{2} \mathbf{1}
+\end{equation*}
+By remembering the formula 
+\begin{equation*}
+\hat{S}_\pm \ket{sm} = \hbar\sqrt{s(s+1) - m(m\pm 1)} \ket{s,m\pm 1} = \hbar \sqrt{(s\mp m)(s \pm m + 1)}\ket{s,m\pm 1}
+\end{equation*}
+The matrix representations of $\hat{S}_+$ and $\hat{S}_-$ are calculated as the following:
+\[\hat{S}_+ = \hbar\begin{pmatrix} 0 & 1 \\ 0 & 0 \end{pmatrix} \qquad \hat{S}_- = \hbar\begin{pmatrix} 0 & 0 \\ 1 & 0\end{pmatrix}
+\]
+Then by noting that $\hat{S}_x = \frac{1}{2}(\hat{S}_+ + \hat{S}_-)$ and $\hat{S}_y = \frac{i}{2}(\hat{S}_- - \hat{S}_+)$ the matrix representations for all three spin components pop out:
+\begin{equation*}
+\hat{S}_x = \frac{\hbar}{2}\begin{pmatrix} 0 & 1 \\ 1 & 0 \end{pmatrix} \qquad \hat{S}_y = \frac{\hbar}{2}\begin{pmatrix} 0 & -i \\ i & 0\end{pmatrix} \qquad \hat{S}_z = \frac{\hbar}{2}\begin{pmatrix} 1 & 0 \\ 0 & -1\end{pmatrix}
+\end{equation*}
+These matrices turn out to be a bit special so they are given the particular name: Pauli matrices, represented by sigma subscript $\frac{\hbar}{2}\sigma_i = \hat{S}_i$. Since
+\begin{equation*} \hat{S}_i\hat{S}_j = \frac{1}{2}(\{\hat{S}_i, \hat{S}_j\} + [\hat{S}_i, \hat{S}_j]) = \frac{\hbar^2}{4}\mathbf{1}\delta_{ij} + i\frac{\hbar}{2}\epsilon_{ijk} \hat{S}_k \end{equation*}
+The same essential relationship applies to the Pauli matrices (which are simply scaled $\hat{S}$ matrices)
+\begin{equation*} \sigma_i\sigma_j = \mathbf{1}\delta_{ij} + i\epsilon_{ijk}\sigma_k \end{equation*}
+A neat corollary of this is that 
+\begin{equation*} \sigma_x\sigma_y\sigma_z = i\sigma_z^2 = i\mathbf{1} \end{equation*}
+It is interesting to note that 
+\begin{equation*} \{\mathbf{1},\sigma_x, \sigma_y, \sigma_z\} \end{equation*}
+forms an independent set on a vector space of dimension four (the set of 2x2 matrices), so it spans this set. That is, any 2x2 is a weighted combinations of the Pauli matrices and the identity. Here is another useful identity:
+\begin{align*}
+(\vec{a}\cdot\vec{\sigma})(\vec{b}\cdot\vec{\sigma}) &= a_i\sigma_i b_j\sigma_j \\
+&= a_ib_j(\mathbf{1}\delta_{ij} + i\epsilon_{ijk}\sigma_k) \\
+&= \vec{a}\cdot\vec{b}\mathbf{1} + i\epsilon_{ijk}a_ib_j\sigma_k \\
+&= (\vec{a}\cdot\vec{b})\mathbf{1} + i(\vec{a}\times\vec{b})\cdot \vec{\sigma}
+\end{align*}
+\end{document}
