@@ -1,11 +1,12 @@
 \documentclass{article}
 \usepackage{format}
-\title{Generic Notes}
+\title{Green's function time evolution}
 \author{Forest Yang}
 \date{June 5, 2017}
 
 
 \begin{document}
+\let\tb\textbf
 \maketitle
 \section{Introduction to the propagator} 
 Consider the classical mechanics problem of two blocks of mass $m$ in a well coupled by springs to the walls and a spring between them (three springs in total). Denoting $x_1$ and $x_2$ as the displacement of each block from the equilibrium position, (note there is a unique equilibrium configuration of the masses, since we can set up two equations with two unknowns and solve them) Hooke's law implies that
@@ -30,7 +31,47 @@ The abstract vector equation can be put into a form that more closely relates to
 \Omega_{21}x_1 + \Omega_{22}x_2
 \end{aligned}
 \end{align*} 
-To be continued.
+Due to the coupling of $\ket{1}$ and $\ket{2}$, one can see that this system as written is hard to solve. To get around this, change basis to the eigenvectors of $\Omega$, which by inspection are 
+\begin{align*}
+\begin{aligned}
+\ket{\textbf{I}} = & \frac{1}{\sqrt{2}}\begin{bmatrix} 1 \\ 1 \end{bmatrix}, && -\omega_1^2 = -\frac{k}{m} \\
+\ket{\textbf{II}}  = & \frac{1}{\sqrt{2}}\begin{bmatrix}1 \\ -1\end{bmatrix}, && -\omega_2^2 = -\frac{3k}{m} 
+\end{aligned}
+\end{align*} 
+This gives the decoupled equations of motion and corresponding solutions (assume for convenience that the initial velocity is 0): 
+\begin{align*}
+\begin{aligned}
+\ddot{x}_I &= -\omega_1^2 x_I   &&\iff&& x_I = x_I(0)\cos(\omega_1 t) \\
+\ddot{x}_{II} &= -\omega_2^2 x_{II} &&\iff&& x_{II} = x_{II}(0)\cos(\omega_2 t)
+\end{aligned}
+\end{align*}
+It's likely that we are only given $x_1(0)$ and $x_2(0)$, rather than $x_I(0)$ and $x_{II}(0)$. However, this is no real obstacle. Simply project $x(0)$ onto the basis $\{\ket{\textbf{I}}, \ket{\textbf{II}}\}$ using the standard $\mathbb{R}^2$ dot product:
+\begin{align*}
+\begin{aligned}
+x_I(0) &&=&& \braket{\textbf{I}|x(0)} && = &&\braket{\textbf{I}|1}x_1(0) + \braket{\textbf{I}|2}x_2(0) && = \frac{x_1(0) + x_2(0)}{\sqrt{2}} \\
+x_{II}(0) &&=&& \braket{\tb{II}|x(0)} && = &&\braket{\tb{II}|1}x_1(0) + \braket{\tb{II}|2}x_2(0) && = \frac{x_1(0) - x_2(0)}{\sqrt{2}}
+\end{aligned}
+\end{align*}
+So then the equation of motion can be written as 
+\begin{equation}\label{eqn:star}\tag{$\star$} \ket{x(t)} = \ket{\tb{I}}\frac{x_1(0) + x_2(0)}{\sqrt{2}}\cos(\omega_1 t) + \ket{\tb{II}}\frac{x_1(0) - x_2(0)}{\sqrt{2}}\cos(\omega_2 t) \end{equation} 
+We can go one step further and represent this in the $\{\ket{1}, \ket{2}\}$ basis by, predictably, projecting onto the $\{\ket{1}, \ket{2}\}$ basis. It might be a bit clearer to write this in vector form, though:
+\[ \begin{bmatrix} x_1(t) \\ x_2(t) \end{bmatrix} = \frac{1}{\sqrt{2}}\begin{bmatrix} 1 \\ 1 \end{bmatrix} \frac{x_1(0) + x_2(0)}{\sqrt{2}}\cos(\omega_1 t) + \frac{1}{\sqrt{2}}\begin{bmatrix} 1 \\ -1 \end{bmatrix}\frac{x_1(0) - x_2(0)}{\sqrt{2}}\cos(\omega_2 t) \]
+This can be streamlined into the matrix equation
+\[\begin{bmatrix} x_1(t) \\ x_2(t) \end{bmatrix} =
+\frac{1}{2}
+ \begin{bmatrix}
+\cos(\omega_1 t) + \cos(\omega_2 t) &\cos(\omega_1 t) - \cos(\omega_2 t) \\
+\cos(\omega_1 t) - \cos(\omega_2 t) & \cos(\omega_1 t) + \cos(\omega_2 t)
+ \end{bmatrix}\begin{bmatrix}x_1(0) \\ x_2(0)\end{bmatrix}\]
+This surprisingly neat formulation shows that the time evolution of the system is simply determined by a matrix multiply on the initial state of the system, and this matrix turned out to be independent of the initial state (and is Hermitian!) Written in the abstract bra-ket notation, 
+\begin{equation*} \ket{x(t)} = U(t)\ket{x(0)} \end{equation*}
+Actually, by the time we reached \eqref{eqn:star}, we already knew this. \eqref{eqn:star} states that
+\begin{equation*} \ket{x(t)} = U(t)\ket{\tb{I}}\braket{\tb{I}|x(0)} + U(t)\ket{\tb{II}}\braket{\tb{II}|x(0)} = U(t)(\ket{\tb{I}}\bra{\tb{I}} + \ket{\tb{II}}\bra{\tb{II}})\ket{x_0} = U(t)\ket{x_0} \end{equation*}
+and one can infer
+\begin{equation*} U(t) = \ket{\tb{I}}\bra{\tb{I}}\cos(\omega_1 t)  + \ket{\tb{II}}\bra{\tb{II}}\cos(\omega_2 t) \end{equation*}
+This example is quite instructive for quantum mechanics, since the equation that needs to be solved is \begin{equation*} i\hbar\ket{\dot{\psi}} = \hat{H}\ket{\psi} \end{equation*}
+and in the same manner, the solution is found by solving the eigenvalue problem of $\hat{H}$ and using the eigenvalues and eigenstates to construct $U(t)$ such that 
+\begin{equation*} \ket{\psi(t)} = U(t)\ket{\psi(0)} \end{equation*}
 \section{Green's Function, Equation of Motion}
 The Schr\"{o}dinger picture considers the wavefunction time-dependent and the operator time-independent. On the other hand, the Heisenberg picture considers the wavefunction time-independent and the operator time-dependent. These viewpoints are mathematically equivalent, because the Heisenberg time-dependent operator $\hat{o}_{\mathcal{H}}$ is defined in terms of the Schr\"odinger time independent operator $\hat{o}_{\mathcal{S}}$ as 
 \begin{equation*} \hat{o}_{\mathcal{H}} = e^{i\hat{H}t}\hat{o}_{\mathcal{S}}e^{-i\hat{H}t}\end{equation*}
@@ -67,13 +108,14 @@ Therefore, the final equation of motion doesn't change much. Concluding the deri
 \frac{\partial G_{\sigma\sigma'}}{\partial \tau} &= -\delta(\tau) -\hv(\tau)\ex{[\hat{H}, C_\sigma(\tau)]C_{\sigma'}^\dagger(0)} + \hv(-\tau)\ex{C_{\sigma'}^\dagger(0),[\hat{H}, C_\sigma(\tau)]}  \\
 &= -\delta(\tau) - \hv(\tau)\ex{(\mu C_\sigma(\tau) - U\hat{N}_{\bar{\sigma}}C_\sigma(\tau))C_{\sigma'}^\dagger(0)} + \hv(\tau)\ex{C_{\sigma'}^\dagger(0) (\mu C_\sigma(\tau) - U\hat{N}_{\bar{\sigma}}C_\sigma(\tau))} \\
 &= -\delta(\tau) +\mu G_{\sigma\sigma'} + U\hv(\tau)\ex{\hat{N}_{\bar{\sigma}}C_\sigma(\tau)C_{\sigma'}^\dagger(0)} - U\hv(\tau)\ex{C_{\sigma'}^\dagger(0)\hat{N}_{\bar{\sigma}}C_\sigma(\tau)} \\
-&= -\delta(\tau) + (\mu - U\hat{N}_{\bar{\sigma}}) G_{\sigma\sigma'} 
 \end{align*}
-$\hat{N}$ is the number operator so it can be moved out of the expectation freely (? prove this later). Therefore the obtained equation of motion is 
-\begin{equation*} (\mu - U\hat{N}_{\bar{\sigma}} - \frac{\partial}{\partial \tau})G_{\sigma\sigma'} = \delta(\tau) \end{equation*}
-\subsection{Action}
+If in fact the simplest form of the hamiltonian is present 
+\begin{equation*} (-\mu + U)c^\dagger c \end{equation*}
+Then the answer is plainly
+\begin{equation*} (\mu - U - \frac{\partial}{\partial \tau})G= \delta(\tau) \end{equation*}
+\subsection{Time Evolution}
 What if you introduce a disturbance to your system over a period of time? Say the hamiltonian is \begin{equation*} \hat{H} = -\mu c^\dagger c \end{equation*} and the disturbance is modeled by 
-\begin{equation*} S(U) = e^{-i \int \hv(t)\hv(t_0 - t) U c^\dagger(t) c(t) dt} = e^{-i \int_0^{t_0}U c^\dagger (t) c(t) dt} \end{equation*} 
+\begin{equation*} S(U) = SU(0 \rightarrow t_0) e^{-i \int \hv(t)\hv(t_0 - t) U c^\dagger(t) c(t) dt} = e^{-i \int_0^{t_0}U c^\dagger (t) c(t) dt} \end{equation*} 
 which changes the Green's function (this one is the real time version) to 
 \begin{equation*}G(t, t') = -i\ex{T_t C(t)C^\dagger(t') S(U)} \end{equation*}
 The presence of the $S(U)$ modifies the value of the normalization constant $z$ (so that $S(U)$ really defines a new expectation) to 
@@ -89,14 +131,39 @@ Now let's compute this Green's function for a specific order of $0, t_0, t, t'$.
 \Rightarrow C(t) &= e^{i\mu t} c \\
 \frac{\partial C^\dagger(t')}{\partial t'} &= i[-\mu c^\dagger c, C^\dagger(t')] \\
 &= -i \mu C^\dagger(t') \\
-\Rightarrow C^\dagger(t') &= e^{-i\mu t} c^\dagger
+\Rightarrow C^\dagger(t') &= e^{-i\mu t'} c^\dagger
 \end{align*}
 Evaluating Green's function supposing $t < 0 < t' < t_0$:
 \begin{align*}
-G(t,t') &= -i\hv(t' > t_{int} > t) \ex{C^\dagger(t') e^{-i\int_0^{t'} U c^\dagger c\, dt} C(t)} + i\hv(t_{int} > t' > t)   \ex{e^{-i\int_{t'}^{t_0} U c^\dagger c\, dt} C^\dagger(t') C(t)} \\
-&= -\frac{i}{z} \tr \big[e^{-\beta\hat{H}} e^{-i\mu t'} c^\dagger e^{-i\int_0^{t'} U c^\dagger c \, dt} e^{i\mu t} c \big] + \frac{i}{z} \tr \big[ e^{-\beta\hat{H}} e^{-i\int_{t'}^{t_0} U c^\dagger c\, dt} e^{-i\mu t'} c^\dagger e^{i\mu t} c \big] \\
-&= -\frac{i e^{i\mu(t-t')}}{z}\big[\braket{0|c^\dagger e^{-i\int_{0}^{t'} U c^\dagger c\,dt} c |0} + e^{\beta\mu} \braket{1| e^\dagger e^{-i\int_0^{t'} Uc^\dagger c\, dt} c | 1} - e^{\beta\mu - iU(t_0-t')}\big] \\
-&= -\frac{ie^{i\mu(t-t')}}{z}(0+ e^{\beta\mu}(1) - e^{\beta\mu - iU(t_0 - t')}) \\
-&= -\frac{ie^{\mu(\beta + i(t-t'))}}{z}(1- e^{-iU(t_0-t')}) 
+G(t,t') &= i\hv(t' - t) \ex{SU( t' \rightarrow t_0)C^\dagger(t')SU(0\rightarrow t')C(t)} \\
+&= \frac{i}{z}\tr\big[e^{-\beta\hat{H}} e^{-i\int_{t'}^{t_0}U c^\dagger c\, dt} e^{-i\mu t'} c^\dagger e^{-i\int_0^{t'} Uc^\dagger c\, dt} e^{i\mu t} c \big] \\
+&= \frac{ie^{i\mu(t-t')}}{z}\big[e^{\mu\beta} \braket{1| e^{-i\int_{t'}^{t_0}U c^\dagger c\,dt} c^\dagger e^{-i\int_0^{t'}Uc^\dagger c\, dt} c|1} \big] \\
+&= \frac{ie^{i\mu(t-t')}}{z}\big[e^{\mu\beta - iU(t_0 - t')}\braket{1|c^\dagger e^{-i\int_0^{t'}Uc^\dagger c\, dt} c|1}\big]\\
+&= \frac{ie^{i\mu(t-t')}}{z}\big[e^{\mu\beta - iU(t_0-t')}\braket{0 |e^{-i\int_0^{t'}Uc^\dagger c\, dt} |0} \big] \\
+&= \frac{i}{z}(ie^{\mu\beta - i\mu(t'-t) - iU(t_0-t')})
+\end{align*}
+Now, evaluating Green's function supposing $0 < t < t' < t_0$:
+\begin{align*}
+G(t,t') &= i\hv(t'-t)\ex{SU(t'\rightarrow t_0)C^\dagger(t')SU(t\rightarrow t')C(t)SU(0\rightarrow t)} \\
+&= \frac{i}{z}\tr\big[e^{-\beta\hat{H}}e^{-i\int_{t'}^{t_0}Uc^\dagger c\,dt}e^{-i\mu t'}c^\dagger e^{-i\int_{t}^{t'}Uc^\dagger c\,dt} e^{i\mu t}ce^{-i\int_0^tUc^\dagger c\, dt}\big] \\
+&= \frac{ie^{i\mu(t-t')}}{z}\braket{1|e^{-\beta\hat{H}}e^{-i\int_{t'}^{t_0}Uc^\dagger c\,dt}c^\dagger e^{-i\int_{t}^{t'}Uc^\dagger c\,dt}ce^{-i\int_0^tUc^\dagger c\, dt}|1} \\
+&= \frac{ie^{i\mu(t-t')}}{z}e^{\beta\mu - iU(t_0-t'+t)}\braket{0|e^{-i\int_t^{t'}Uc^\dagger c\,dt}|0} \\
+&= \frac{i}{z}e^{\beta\mu -i\mu(t'-t) - iU(t_0 - t' + t)} 
+\end{align*}
+Alternatively this answer can be expressed as 
+\begin{equation*} \frac{i}{z}e^{\beta\mu +it(\mu-U) +it'(U-\mu) -it_0U} \end{equation*}
+Now evaluating Green's function supposing $t' < 0 < t_0 < t$:
+\begin{align*}
+G(t, t') &= -i\hv(t-t')\ex{C(t)SU(0\rightarrow t_0)C^\dagger(t')} \\
+&= -\frac{i}{z} \tr\big[e^{-\beta\hat{H}}e^{i\mu t}ce^{-i\int_0^{t_0}Uc^\dagger c\,dt}e^{-i\mu t'}c^\dagger\big] \\
+&= -\frac{ie^{i\mu(t-t')}}{z}\braket{1|e^{-i\int_0^{t_0}Uc^\dagger c\,dt}|1} \\
+&= -\frac{i}{z} e^{i\mu(t-t') - iUt_0}
+\end{align*}
+Now evaluating Green's function supposing $0 < t_0 < t' < t$:
+\begin{align*}
+G(t,t') &= -i\hv(t-t')\ex{C(t)C^\dagger(t')SU(0\rightarrow t_0)} \\
+&= -\frac{i}{z}\tr\big[e^{-\beta\hat{H}}e^{i\mu t} c e^{-i\mu t'} c^\dagger e^{-i\int_0^{t_0} Uc^\dagger c\,dt}\big] \\
+&= -\frac{ie^{i\mu(t-t')}}{z}\braket{1|1} \\
+&= -\frac{i}{z}e^{i\mu(t-t')}
 \end{align*}
 \end{document}
